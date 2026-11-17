@@ -18,7 +18,7 @@
         .subtitle { text-align: center; color: #27ae60; font-size: 15px; font-weight: bold; margin-bottom: 25px; }
         
         /* Таблица (без вертикальных границ) */
-        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 15px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 15px; }
         th, td { padding: 12px 8px; text-align: left; border-bottom: 1px solid #eee; }
         
         /* Заголовки колонок */
@@ -34,6 +34,25 @@
         /* Чередование строк (зебра) для удобства чтения */
         tr:nth-child(even) { background-color: #fcfcfc; }
 
+        /* Блок статистики по целевому сбору */
+        .summary-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        .summary-title { font-size: 16px; font-weight: bold; color: #1a252f; text-align: center; margin-bottom: 12px; }
+        .summary-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #ddd; font-size: 15px; }
+        .summary-row:last-child { border-bottom: none; }
+        .summary-row span { color: #555; }
+        .summary-row b { font-size: 16px; }
+        .collected { color: #27ae60; }
+        .plan { color: #1a252f; }
+        .reserve-neg { color: #c62828; }
+        .reserve-pos { color: #27ae60; }
+        .reserve-note { font-size: 12px; color: #7f8c8d; text-align: center; margin-top: 10px; font-style: italic; }
+
         /* Примечание внизу */
         .note { font-size: 13px; color: #7f8c8d; text-align: center; margin-top: 20px; }
 
@@ -45,6 +64,7 @@
             th { background-color: #fff; border-bottom: 2px solid #000; }
             td { border-bottom: 1px solid #ccc; }
             td.mark { color: #000; }
+            .summary-card { border: 1px solid #000; background: #fff; }
         }
     </style>
 </head>
@@ -54,7 +74,7 @@
     <a href="index.html" class="back-link">← На главную</a>
     
     <h1>Статус платежей по шлагбауму</h1>
-    <div class="subtitle">по состоянию на 17.11.2026, 20:54</div>
+    <div class="subtitle">по состоянию на 17.11.2026, 21:03</div>
 
     <table>
         <thead>
@@ -112,6 +132,24 @@
             </tr>
         </tbody>
     </table>
+
+    <!-- Блок статистики по целевому сбору -->
+    <div class="summary-card">
+        <div class="summary-title">📊 Статистика по целевому сбору</div>
+        <div class="summary-row">
+            <span>Итого собрано:</span>
+            <b class="collected">80 000 ₽</b>
+        </div>
+        <div class="summary-row">
+            <span>План по смете:</span>
+            <b class="plan">362 104 ₽</b>
+        </div>
+        <div class="summary-row">
+            <span>Резерв:</span>
+            <b class="reserve-neg">-282 104 ₽</b>
+        </div>
+        <div class="reserve-note">* Резерв станет положительным, когда сумма сборов превысит план.</div>
+    </div>
 
     <div class="note">
         * Целевой взнос — 10 000 ₽ с квартиры.<br>
