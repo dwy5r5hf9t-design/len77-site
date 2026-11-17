@@ -52,7 +52,7 @@
         .amount-value { font-size: 24px; font-weight: bold; color: #27ae60; }
         .amount-sub { font-size: 13px; color: #555; font-weight: bold; margin-top: 2px; text-align: center; }
         
-        /* Желтая плашка (ВАЖНО) - убрали нижний отступ, чтобы не распирало рамку */
+        /* Желтая плашка (ВАЖНО) */
         .small-note { font-size: 14px; color: #555; background: #fffbe6; border-left: 3px solid #f39c12; padding: 10px; border-radius: 6px; margin: 10px 0 0 0; }
 
         /* ---------- Заголовки секций (Оплата, Отказ) ---------- */
@@ -103,21 +103,36 @@
             text-align: justify;
         }
 
+        /* ---------- Кнопка Статус платежей ---------- */
+        .status-btn {
+            display: block;
+            text-align: center;
+            background: #fff;
+            color: #27ae60;
+            border: 2px solid #27ae60;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 25px 0 10px 0;
+            transition: background 0.2s;
+        }
+        .status-btn:hover { background: #f4fbf7; }
+
         /* ---------- Подпись внизу ---------- */
         .footer-signature {
             text-align: center;
             font-size: 13px;
             color: #7f8c8d;
-            margin-top: 30px;
+            margin-top: 25px;
             margin-bottom: 10px;
             line-height: 1.5;
         }
 
-        /* ---------- МОБИЛЬНАЯ ВЕРСТКА (только экран, на печать не влияет) ---------- */
+        /* ---------- МОБИЛЬНАЯ ВЕРСТКА ---------- */
         @media screen and (max-width: 500px) {
-            /* Платежи в одну колонку */
             .pay-row { grid-template-columns: 1fr; }
-            /* Выключаем выравнивание по ширине */
             p, li { text-align: left; }
             .warning-note, .info-note { text-align: left; }
         }
@@ -127,18 +142,13 @@
             body { background: #fff; }
             .container { max-width: 100%; padding: 0; box-shadow: none; }
             
-            /* Второй блок (рамка с оплатой) начинается со второй страницы */
             .print-break { page-break-before: always; }
             
-            /* Убираем тени, делаем рамки четкими */
             .alert-block, .info-card, .pay-card { border: 1px solid #000 !important; box-shadow: none !important; }
             .alert-badge { border-bottom: 1px solid #000; }
-            
-            /* Не разрывать карточки оплаты */
             .pay-card { page-break-inside: avoid; }
             
-            /* Подпись и дисклеймеры при печати */
-            .footer-signature { color: #000; }
+            .footer-signature, .status-btn { display: none; } /* Скрываем кнопку и подпись при печати */
             .warning-note, .info-note { border: 1px solid #000 !important; background: #fff !important; color: #000 !important; }
             .doc-link { color: #000 !important; }
         }
@@ -147,9 +157,7 @@
 <body>
 <div class="container">
 
-    <!-- ================================================== -->
-    <!-- ЧАСТЬ 1: ИНФОРМАЦИЯ, ОПЕРАТОР, РАСЧЕТ              -->
-    <!-- ================================================== -->
+    <!-- ЧАСТЬ 1 -->
     <div class="alert-block">
         <div class="alert-badge">🚧 Установка Шлагбаума</div>
         
@@ -157,7 +165,6 @@
             <p><b>Уважаемые собственники!</b> Во исполнение решения Общего собрания собственников (<a class="doc-link" href="oss_no_personal.pdf" target="_blank" rel="noopener">Протокол от 21.06.2026</a>, доступен в ГИС ЖКХ) в ближайшее время на въезде на придомовую территорию будет установлен шлагбаум.</p>
             <p>Оплата покупки, установки и диспетчеризации производится на средства жителей дома, добровольно желающих принять участие в проекте.</p>
 
-            <!-- Блок "Оператор" -->
             <div class="info-card">
                 <h3>Оператором шлагбаума выбран:<br><a class="doc-link" href="https://intelpark.ru/" target="_blank" rel="noopener">ООО «Интеллект-парк»</a></h3>
                 <p>Инициативная группа, наделенная полномочиями ОСС, изучила реальный опыт эксплуатации шлагбаумов в Гагаринском районе и рассмотрела предложения 4 компаний: ООО «МД Системы безопасности», ООО «Интеллект-парк», ООО «Премиум Торг», ООО «ПЭМ».</p>
@@ -170,7 +177,6 @@
                 </ul>
             </div>
 
-            <!-- Финансовый расчет -->
             <div class="info-card">
                 <h3>💰 Финансовый расчет</h3>
                 <p>На сегодняшний день участие в проекте подтвердили около <b>40 квартир</b>. <a class="doc-link" href="smeta_2026.pdf" target="_blank" rel="noopener">На основании сметы</a> утверждены следующие взносы:</p>
@@ -193,13 +199,10 @@
         </div>
     </div>
 
-    <!-- ================================================== -->
-    <!-- ЧАСТЬ 2: ОПЛАТА И ОТКАЗ ОТ ОПЛАТЫ                  -->
-    <!-- ================================================== -->
+    <!-- ЧАСТЬ 2 -->
     <div class="alert-block print-break">
         <div class="alert-content">
             
-            <!-- Блок оплаты -->
             <h3 class="section-title" style="margin-top: 0;">💳 Как принять участие и оплатить</h3>
             
             <p style="text-align: center; font-size: 15px; color: #555; margin-bottom: 15px;">
@@ -208,7 +211,6 @@
             </p>
 
             <div class="pay-row">
-                <!-- Платёж №1 -->
                 <div class="pay-card">
                     <div class="pay-header">
                         <div class="pay-num">1</div>
@@ -224,7 +226,6 @@
                     </div>
                 </div>
 
-                <!-- Платёж №2 -->
                 <div class="pay-card">
                     <div class="pay-header">
                         <div class="pay-num">2</div>
@@ -241,17 +242,14 @@
                 </div>
             </div>
 
-            <!-- ДИСКЛЕЙМЕР (Красный) -->
             <div class="warning-note">
                 ⚠️ <b>ВАЖНО:</b> Обязательно указывайте номер квартиры/машины и назначение платежа в комментарии к переводу! Без этого мы не сможем понять, от кого пришли деньги.
             </div>
 
-            <!-- ИНФОРМАЦИОННАЯ ЗАМЕТКА (Голубая) -->
             <div class="info-note">
                 ℹ️ <b>Напоминаем:</b> мы не организуем платную парковку. Шлагбаум лишь ограничивает въезд во двор посторонних лиц, но не распределяет (и не гарантирует) машиноместа.
             </div>
 
-            <!-- Блок "А если не хочу платить" -->
             <h3 class="section-title" style="margin-top: 30px;">🚗 А если я не хочу платить за установку?</h3>
             <p style="font-size: 16px; color: #333;">Согласно утвержденному <a class="doc-link" href="rules.pdf" target="_blank" rel="noopener">Положению о доступе во двор</a>, собственники, отказавшиеся платить целевой взнос, пользуются шлагбаумом бесплатно, но с ограничениями:</p>
             <ul class="list-content">
@@ -261,9 +259,11 @@
 
         </div>
     </div>
-    <!-- ================= КОНЕЦ БЛОКА ==================== -->
 
-    <!-- Подпись внизу страницы -->
+    <!-- КНОПКА ПЕРЕХОДА К СТАТУСУ -->
+    <a href="status.html" class="status-btn">📊 Посмотреть статус платежей</a>
+
+    <!-- Подпись -->
     <div class="footer-signature">
         Председатель инициативной группы <b>Дмитрий Мигунов</b>, +7 931 121-16-67
     </div>
