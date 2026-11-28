@@ -5,12 +5,20 @@ $json = file_get_contents($jsonFile);
 $data = json_decode($json, true);
 if (!$data || !isset($data['apartments'])) { http_response_code(500); die('Ошибка: некорректный формат данных'); }
 
-// === РАСЧЁТЫ ИЗ JSON ===
-$priceTarget = intval($data['prices']['target'] ?? 10000);
-$priceCar    = intval($data['prices']['car'] ?? 4000);
+// === ХАРДКОД: цены взносов (пока нет блока prices в JSON) ===
+$priceTarget = 10000;
+$priceCar    = 4000;
 
-$aptCount    = 0;
-$carCount    = 0;
+// === ХАРДКОД: затраты (пока нет блока expenses в JSON) ===
+$expenses = [
+    ["name" => "Установка (аванс)",           "date" => "24.11.26",     "amount" => 108631, "planned" => false],
+    ["name" => "Установка (оплата)",          "date" => "29.11.26",     "amount" => 253473, "planned" => true],
+    ["name" => "Диспетчеризация до 30.11.2027", "date" => "30.11.2027", "amount" => 154800, "planned" => false],
+];
+
+// === РАСЧЁТ из JSON ===
+$aptCount = 0;
+$carCount = 0;
 foreach ($data['apartments'] as $apt) {
     if (!empty($apt['target'])) $aptCount++;
     $carCount += intval($apt['cars'] ?? 0);
@@ -19,8 +27,6 @@ $sumTarget = $aptCount * $priceTarget;
 $sumCars   = $carCount * $priceCar;
 $sumIncome = $sumTarget + $sumCars;
 
-// Затраты
-$expenses = $data['expenses'] ?? [];
 $sumExpense = 0;
 foreach ($expenses as $e) $sumExpense += intval($e['amount'] ?? 0);
 
@@ -61,7 +67,6 @@ $reserve = $sumIncome - $sumExpense;
         .plan-tag { color: #7f8c8d; font-size: 12px; font-weight: normal; }
         .apt-table { margin-top: 30px; }
         td.mark { text-align: center; font-size: 18px; color: #27ae60; letter-spacing: 2px; }
-        .note { font-size: 13px; color: #7f8c8d; text-align: center; margin-top: 20px; }
         @media print {
             body { background: #fff; }
             .container { box-shadow: none; padding: 0; max-width: 100%; }
@@ -86,13 +91,13 @@ $reserve = $sumIncome - $sumExpense;
         <tbody>
             <tr>
                 <td>Целевой</td>
-                <td class="num"><?= number_format($priceTarget, 0, ' ', ' ') ?> ₽</td>
+                <td class="num">10 000 ₽</td>
                 <td class="center"><?= $aptCount ?> квартир</td>
                 <td class="num"><b><?= number_format($sumTarget, 0, ' ', ' ') ?> ₽</b></td>
             </tr>
             <tr>
                 <td>Регулярный 2026</td>
-                <td class="num"><?= number_format($priceCar, 0, ' ', ' ') ?> ₽</td>
+                <td class="num">4 000 ₽</td>
                 <td class="center"><?= $carCount ?> авто</td>
                 <td class="num"><b><?= number_format($sumCars, 0, ' ', ' ') ?> ₽</b></td>
             </tr>
@@ -145,11 +150,6 @@ $reserve = $sumIncome - $sumExpense;
             <?php endforeach; ?>
         </tbody>
     </table>
-
-    <div class="note">
-        * Целевой взнос — <?= number_format($priceTarget, 0, ' ', ' ') ?> ₽ с квартиры.<br>
-        ** Регулярный взнос — <?= number_format($priceCar, 0, ' ', ' ') ?> ₽ с автомобиля (каждая ✅ = одно авто).
-    </div>
 </div>
 </body>
 </html>
