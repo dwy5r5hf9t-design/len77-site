@@ -11,8 +11,8 @@ $priceCar    = 4000;
 
 // === ХАРДКОД: затраты (пока нет блока expenses в JSON) ===
 $expenses = [
-    ["name" => "Установка (аванс)",           "date" => "24.11.26",     "amount" => 108631, "planned" => false],
-    ["name" => "Установка (оплата)",          "date" => "29.11.26",     "amount" => 253473, "planned" => true],
+    ["name" => "Установка (аванс)",             "date" => "24.11.26",   "amount" => 108631, "planned" => false],
+    ["name" => "Установка (оплата)",            "date" => "29.11.26",   "amount" => 253473, "planned" => true],
     ["name" => "Диспетчеризация до 30.11.2027", "date" => "30.11.2027", "amount" => 154800, "planned" => false],
 ];
 
@@ -21,7 +21,7 @@ $aptCount = 0;
 $carCount = 0;
 foreach ($data['apartments'] as $apt) {
     if (!empty($apt['target'])) $aptCount++;
-    $carCount += intval($apt['cars'] ?? 0);
+    $carCount += max(0, intval($apt['cars'] ?? 0));
 }
 $sumTarget = $aptCount * $priceTarget;
 $sumCars   = $carCount * $priceCar;
@@ -83,7 +83,7 @@ $reserve = $sumIncome - $sumExpense;
 <div class="container">
     <a href="index.html" class="back-link">← На главную</a>
     <h1>Баланс по шлагбауму</h1>
-    <div class="subtitle">актуализировано <?= htmlspecialchars($data['updated']) ?></div>
+    <div class="subtitle">актуализировано <?= htmlspecialchars((string)($data['updated'] ?? '')) ?></div>
 
     <div class="section-title">📊 Статистика поступлений</div>
     <table>
@@ -91,13 +91,13 @@ $reserve = $sumIncome - $sumExpense;
         <tbody>
             <tr>
                 <td>Целевой</td>
-                <td class="num">10 000 ₽</td>
+                <td class="num"><?= number_format($priceTarget, 0, ' ', ' ') ?> ₽</td>
                 <td class="center"><?= $aptCount ?> квартир</td>
                 <td class="num"><b><?= number_format($sumTarget, 0, ' ', ' ') ?> ₽</b></td>
             </tr>
             <tr>
                 <td>Регулярный 2026</td>
-                <td class="num">4 000 ₽</td>
+                <td class="num"><?= number_format($priceCar, 0, ' ', ' ') ?> ₽</td>
                 <td class="center"><?= $carCount ?> авто</td>
                 <td class="num"><b><?= number_format($sumCars, 0, ' ', ' ') ?> ₽</b></td>
             </tr>
@@ -114,9 +114,9 @@ $reserve = $sumIncome - $sumExpense;
         <tbody>
             <?php foreach ($expenses as $e): ?>
             <tr>
-                <td><?= htmlspecialchars($e['name']) ?></td>
+                <td><?= htmlspecialchars((string)$e['name']) ?></td>
                 <td class="center">
-                    <?= htmlspecialchars($e['date']) ?>
+                    <?= htmlspecialchars((string)$e['date']) ?>
                     <?php if (!empty($e['planned'])): ?><span class="plan-tag">(план)</span><?php endif; ?>
                 </td>
                 <td class="num"><?= number_format(intval($e['amount']), 0, ' ', ' ') ?> ₽</td>
@@ -143,9 +143,9 @@ $reserve = $sumIncome - $sumExpense;
         <tbody>
             <?php foreach ($data['apartments'] as $apt): ?>
             <tr>
-                <td><?= htmlspecialchars($apt['n']) ?></td>
+                <td><?= htmlspecialchars((string)($apt['n'] ?? '')) ?></td>
                 <td class="mark"><?= !empty($apt['target']) ? '✅' : '' ?></td>
-                <td class="mark"><?= str_repeat('✅', intval($apt['cars'] ?? 0)) ?></td>
+                <td class="mark"><?= str_repeat('✅', max(0, intval($apt['cars'] ?? 0))) ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
