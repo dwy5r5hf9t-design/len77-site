@@ -37,7 +37,7 @@ $reserve = $totalTarget - intval($data['plan']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Статус платежей | Ленинский 77к2</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.5; color: #333; margin: 0; background-color: #f4f7f6; font-size: 16px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.5; color: #333; margin: 0; background-color: #fdf6f6; font-size: 16px; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); min-height: 100vh; }
         .back-link { display: inline-block; margin-bottom: 20px; color: #7f8c8d; text-decoration: none; font-size: 15px; font-weight: 500; }
         .back-link:hover { color: #27ae60; }
@@ -77,7 +77,7 @@ $reserve = $totalTarget - intval($data['plan']);
 <div class="container">
     <a href="index.html" class="back-link">← На главную</a>
     <h1>Статус платежей по шлагбауму</h1>
-    <div class="subtitle">по состоянию на <?= htmlspecialchars($data['updated']) ?></div>
+    <div class="subtitle">актуализировано <?= htmlspecialchars($data['updated']) ?></div>
 
     <table>
         <thead>
