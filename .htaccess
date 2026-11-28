@@ -18,6 +18,7 @@
     <FilesMatch "\.pdf$">
         Header set Cache-Control "public, max-age=31536000"
     </FilesMatch>
+
     # Редирект со старого имени astatus.php на balance.php
     Redirect 301 /status.html /balance.php
 </IfModule>
